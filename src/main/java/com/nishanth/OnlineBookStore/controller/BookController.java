@@ -34,6 +34,14 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
+    // A GetMapping annotation for getBookById method to retrieve the respective book from the bookstore
+    @GetMapping("/{id}")
+    public ResponseEntity<Book> getBookById(@PathVariable Long id)
+    {
+        Optional<Book> book = bookService.getBookById(id);
+        return book.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
     // A PutMapping annotation for updateBookById method to update the book based on the respective id of the  book in the bookstore
     @PutMapping("/{id}")
